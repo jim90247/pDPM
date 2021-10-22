@@ -223,7 +223,7 @@ void *mitsume_benchmark_ycsb(void *input_metadata) {
   int test_size = MITSUME_BENCHMARK_SIZE;
   int *op_key = NULL;
   long local_op = 0;
-  chrono::nanoseconds before, after;
+  // chrono::nanoseconds before, after;
   mitsume_key *target_key = NULL;
   write = (char *)local_inf->user_input_space[0];
   read = (char *)local_inf->user_output_space[0];

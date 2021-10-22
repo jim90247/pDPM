@@ -10,7 +10,7 @@ ENABLE_DGB :=
 HOTS_HOME := .
 MICA_HOME := ../../mica2/src
 
-INC	:= -I ${HOTS_HOME} -I ${MICA_HOME}
+INC	:= -I ${HOTS_HOME} -I ${MICA_HOME} -I $${HOME}/.local/boost_1_76_0/include
 
 #DEBUG := -DNDEBUG
 CPPFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${DEBUG} -std=c++14 ${INC} -Wall -Werror -g \
@@ -22,7 +22,8 @@ CPPFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${DEBUG} -std=c++14 ${INC} -Wall -Werror -g
 	#-Winline
 
 LDFLAGS := ${ENABLE_DGB} ${LTO} -O2 -libverbs -lrt -pthread -lmemcached -lnuma -g \
-	-lpapi -lboost_system -lboost_coroutine -lboost_thread
+	-lpapi -lboost_system -lboost_coroutine -lboost_thread \
+	-L $${HOME}/.local/boost_1_76_0/lib
 
 src := ibsetup.o memcached.o \
 	mitsume_macro.o mitsume_util.o\
