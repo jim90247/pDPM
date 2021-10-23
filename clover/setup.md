@@ -8,8 +8,8 @@ Install PAPI.
 sudo apt install libpapi-dev papi-tools
 ```
 
-Install `libhugetlbfs`.
+Install huge table related stuffs.
 
 ```bash
-sudo apt install libhugetlbfs-dev
+sudo apt install libhugetlbfs-dev libhugetlbfs-bin
 ```
