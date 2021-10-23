@@ -1,6 +1,7 @@
 #!/bin/bash
 
-Help=$(cat <<-"HELP"
+Help=$(
+    cat <<-"HELP"
 
 run_ms.sh - Run a Clover Metadata Server
 
@@ -18,12 +19,12 @@ HELP
 )
 
 help() {
-	echo "$Help"
+    echo "$Help"
 }
 
 if [[ $# == 0 ]] || [[ "$1" == "-h" ]]; then
-	help
-	exit 1
+    help
+    exit 1
 fi
 
 #
@@ -44,9 +45,9 @@ NR_CN=1
 NR_MN=1
 MEMCACHED_SERVER_IP=${MEMCACHED_SERVER:-"192.168.223.1"}
 
-./init -S 1 -L 2							\
-       --machine-id=$1							\
-       --base-port-index=$ibdev_base_port --device-id=$ibdev_id		\
-       --num-clients=$NR_CN						\
-       --num-memory=$NR_MN						\
-       --memcached-server-ip=$MEMCACHED_SERVER_IP
+./init -S 1 -L 2 \
+    --machine-id="$1" \
+    --base-port-index=$ibdev_base_port --device-id=$ibdev_id \
+    --num-clients=$NR_CN \
+    --num-memory=$NR_MN \
+    --memcached-server-ip="$MEMCACHED_SERVER_IP"
