@@ -9,5 +9,5 @@ source_files=(
   run_memory.sh
 )
 source_file_dir="pDPM/clover"
-scp ${source_files[@]} amd2:${source_file_dir}
-scp ${source_files[@]} a100:${source_file_dir}
+rsync -ahPzz ${source_files[@]} amd2:${source_file_dir}
+rsync -ahPzz ${source_files[@]} a100:${source_file_dir}
