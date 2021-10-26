@@ -13,7 +13,9 @@ MICA_HOME := ../../mica2/src
 INC	:= -I ${HOTS_HOME} -I ${MICA_HOME} -I $${HOME}/.local/boost_1_76_0/include
 
 #DEBUG := -DNDEBUG
-CPPFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${DEBUG} -std=c++14 ${INC} -Wall -Werror -g \
+#PROFILE := -DPROFILING
+#PROFILE_LDFLAGS := -lprofiler # gperftools CPU profiling
+CPPFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${DEBUG} ${PROFILE} -std=c++14 ${INC} -Wall -Werror -g \
 	-Wno-unused-result \
 	-Wno-unused-value \
 	-Wno-unused-function \
@@ -21,7 +23,7 @@ CPPFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${DEBUG} -std=c++14 ${INC} -Wall -Werror -g
         -D BOOST_COROUTINES_NO_DEPRECATION_WARNING
 	#-Winline
 
-LDFLAGS := ${ENABLE_DGB} ${LTO} -O2 -libverbs -lrt -pthread -lmemcached -lnuma -g \
+LDFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${PROFILE_LDFLAGS} -libverbs -lrt -pthread -lmemcached -lnuma -g \
 	-lpapi -lboost_system -lboost_coroutine -lboost_thread \
 	-L $${HOME}/.local/boost_1_76_0/lib
 

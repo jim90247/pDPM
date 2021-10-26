@@ -1,5 +1,9 @@
 #include "mitsume_benchmark.h"
 
+#ifdef PROFILING
+#include <gperftools/profiler.h>
+#endif
+
 #define MITSUME_TARGET_KEY 10
 
 atomic<long> total_op;
@@ -285,6 +289,10 @@ void *mitsume_benchmark_ycsb(void *input_metadata) {
   MITSUME_PRINT("======\n");
   MITSUME_PRINT("test size: %d\n", test_size);
 
+#ifdef PROFILING
+  MITSUME_PRINT("Start profiling...");
+  ProfilerStart("/tmp/clover_client_profile.out");
+#endif
   while (!end_flag) {
     key = (uint64_t)target_key[i];
     if (MITSUME_YCSB_VERIFY_LEVEL)
@@ -307,6 +315,10 @@ void *mitsume_benchmark_ycsb(void *input_metadata) {
       i = 0;
     local_op++;
   }
+#ifdef PROFILING
+  ProfilerStop();
+  MITSUME_PRINT("Stop profiling...");
+#endif
   output_lock.lock();
   cout << thread_metadata->thread_id << " finish ycsb: " << local_op << endl;
   output_lock.unlock();
