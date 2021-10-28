@@ -532,7 +532,7 @@ int ib_connect_qp(struct ib_inf *inf, int qp_index, struct ib_qp_attr *dest)
       (RSEC_NETWORK_MODE == RSEC_NETWORK_ROCE) ? IBV_MTU_1024 : IBV_MTU_4096;
   attr.dest_qp_num = dest->qpn;
   attr.rq_psn = P15_UD_PSN;
-  attr.max_dest_rd_atomic = 10;
+  attr.max_dest_rd_atomic = 16;
   attr.min_rnr_timer = 12;
   attr.ah_attr.is_global = (RSEC_NETWORK_MODE == RSEC_NETWORK_ROCE) ? 1 : 0;
   attr.ah_attr.dlid = (RSEC_NETWORK_MODE == RSEC_NETWORK_ROCE) ? 0 : dest->lid;
@@ -562,7 +562,7 @@ int ib_connect_qp(struct ib_inf *inf, int qp_index, struct ib_qp_attr *dest)
   attr.rnr_retry = 7;
   attr.sq_psn = P15_UD_PSN;
   attr.max_rd_atomic = 16;
-  attr.max_dest_rd_atomic = 16;
+
   if (ibv_modify_qp(inf->conn_qp[qp_index], &attr,
                     IBV_QP_STATE | IBV_QP_TIMEOUT | IBV_QP_RETRY_CNT |
                         IBV_QP_RNR_RETRY | IBV_QP_SQ_PSN |
