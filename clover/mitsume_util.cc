@@ -9,6 +9,7 @@ int local_barrier_client_id;
 #define _ASSIGN(dst, src, ...) asm("" : "=r"(dst) : "0"(src), ##__VA_ARGS__)
 
 int stick_this_thread_to_core(int core_id) {
+#ifdef PIN_THREADS
   int num_cores = sysconf(_SC_NPROCESSORS_ONLN);
   if (core_id < 0 || core_id >= num_cores)
     return EINVAL;
@@ -19,6 +20,9 @@ int stick_this_thread_to_core(int core_id) {
 
   pthread_t current_thread = pthread_self();
   return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
+#else
+  return 0;
+#endif
 }
 
 void schedule(void) { usleep(10); }
