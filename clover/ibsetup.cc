@@ -881,8 +881,9 @@ int userspace_one_poll(struct ib_inf *ib_ctx, uint64_t wr_id,
       // MITSUME_PRINT("poll %llu\n", (unsigned long long int) wc[comps].wr_id);
       // Ideally, we should check from comps -> new_comps - 1
       if (wc[comps].status != 0) {
-        fprintf(stderr, "Bad wc status %d %llu\n", wc[comps].status,
-                (unsigned long long int)wc[comps].wr_id);
+        fprintf(stderr, "Bad wc status %d: %s (wr_id: %llu, opcode: %d)\n",
+                wc[comps].status, ibv_wc_status_str(wc[comps].status),
+                (unsigned long long int)wc[comps].wr_id, wc[comps].opcode);
         exit(0);
         return 1;
         // exit(0);
