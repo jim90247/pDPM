@@ -15,7 +15,7 @@ INC	:= -I ${HOTS_HOME} -I ${MICA_HOME} -I $${HOME}/.local/boost_1_76_0/include
 #DEBUG := -DNDEBUG
 #PROFILE := -DPROFILING
 #PROFILE_LDFLAGS := -lprofiler # gperftools CPU profiling
-CPPFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${DEBUG} ${PROFILE} -std=c++14 ${INC} -Wall -Werror -g \
+CPPFLAGS := ${ENABLE_DGB} ${LTO} -O2 ${DEBUG} ${PROFILE} -std=c++14 ${INC} -Wall -Werror -g -fno-omit-frame-pointer \
 	-Wno-unused-result \
 	-Wno-unused-value \
 	-Wno-unused-function \

@@ -31,6 +31,7 @@ source export_local_settings.sh
 source export_experiment_settings.sh
 
 LD_PRELOAD=libhugetlbfs.so HUGETLB_MORECORE=yes \
+    perf record -g \
     numactl --cpunodebind=0 --membind=0 \
     ./init -C 1 -L 2 \
     --machine-id="$1" \
