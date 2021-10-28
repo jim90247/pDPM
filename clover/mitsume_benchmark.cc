@@ -528,10 +528,10 @@ int mitsume_benchmark_thread(int thread_num,
 
 int mitsume_benchmark(struct mitsume_ctx_clt *local_ctx_clt) {
   // mitsume_benchmark_thread(1, local_ctx_clt, &mitsume_benchmark_latency);
-  mitsume_benchmark_thread(MITSUME_BENCHMARK_THREAD_NUM, local_ctx_clt,
-                           &mitsume_benchmark_ycsb);
   // mitsume_benchmark_thread(MITSUME_BENCHMARK_THREAD_NUM, local_ctx_clt,
-  // &mitsume_benchmark_coroutine);
+  // &mitsume_benchmark_ycsb);
+  mitsume_benchmark_thread(MITSUME_BENCHMARK_THREAD_NUM, local_ctx_clt,
+                           &mitsume_benchmark_coroutine);
   // mitsume_benchmark_thread(MITSUME_TEST_LOAD_WRITE_NUM+MITSUME_TEST_LOAD_READ_NUM,
   // local_ctx_clt, &mitsume_benchmark_load);
   return 0;
