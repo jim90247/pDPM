@@ -150,6 +150,8 @@ void *main_memory(void *arg) {
   memory_allocate_memoryspace(input_arg);
 
   printf("ready to press ctrl+c to finish experiment\n");
-  while (1)
-    ;
+  while (1) {
+    // sleep instead of busy waiting to save computation resources
+    sleep(1);
+  }
 }
