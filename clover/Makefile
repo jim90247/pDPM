@@ -34,7 +34,8 @@ src := ibsetup.o memcached.o \
 	mitsume_clt_tool.o mitsume_clt_thread.o mitsume_clt_test.o \
 	mitsume_tool.o mitsume_tool_cache.o mitsume_tool_gc.o \
 	mitsume_stat.o\
-	mitsume_benchmark.o
+	mitsume_benchmark.o \
+	op_counter.o
 
 # Handle MICA differently. MICA relies on DNDEBUG to disable datapath asserts.
 #MICA_DEBUG := -DNDEBUG

@@ -4,11 +4,19 @@
 #include "server.h"
 #include <getopt.h>
 #include <stdio.h>
+#include <signal.h>
+#include "op_counter.h"
 
 int MITSUME_CLT_NUM;
 int MITSUME_MEM_NUM;
 
+void PrintOperationsOnInterrupt(int foo) {
+  opctr::PrintTotalOperations();
+  exit(0);
+}
+
 int main(int argc, char *argv[]) {
+  signal(SIGINT, PrintOperationsOnInterrupt);
   int i, c;
   int is_master = -1;
   int num_threads = 1;

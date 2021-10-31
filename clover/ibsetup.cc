@@ -1,4 +1,5 @@
 #include "ibsetup.h"
+#include "op_counter.h"
 
 std::unordered_map<uint64_t, unsigned int> WR_ID_WAITING_TABLE;
 
@@ -664,6 +665,7 @@ int userspace_one_send(struct ibv_qp *qp, struct ibv_mr *local_mr,
   if (ret)
     die_printf("%s-%d: ibv_post_send fail %llu\n", __func__, __LINE__,
                (unsigned long long int)wr.wr_id);
+  opctr::RecordOperation(opctr::Operation::kUserspaceOneSend);
 #ifdef MITSUME_TRAFFIC_IBLAYER_STAT
   MITSUME_STAT_FORCE_ADD(MITSUME_STAT_IB_RPC, request_size);
 // MITSUME_STAT_TRAFFIC_ADD(remote_mr->machine_id, traffic);
@@ -706,6 +708,7 @@ int userspace_one_read(struct ib_inf *ib_ctx, uint64_t wr_id,
     die_printf("%s-%d: ibv_post_send fail %d:%llu\n", __func__, __LINE__, ret,
                (unsigned long long int)wr.wr_id);
   CPE(ret, "ibv_post_send-read error", ret);
+  opctr::RecordOperation(opctr::Operation::kUserspaceOneRead);
   return 0;
 }
 
@@ -736,6 +739,7 @@ int userspace_one_cs(struct ib_inf *ib_ctx, uint64_t wr_id,
   if (ret)
     die_printf("%s-%d: ibv_post_send fail %d:%llu\n", __func__, __LINE__, ret,
                (unsigned long long int)wr.wr_id);
+  opctr::RecordOperation(opctr::Operation::kUserspaceOneCs);
   return 0;
 }
 
@@ -765,6 +769,7 @@ int userspace_one_write(struct ib_inf *ib_ctx, uint64_t wr_id,
   if (ret)
     die_printf("%s-%d: ibv_post_send fail %d:%llu\n", __func__, __LINE__, ret,
                (unsigned long long int)wr.wr_id);
+  opctr::RecordOperation(opctr::Operation::kUserspaceOneWrite);
   return 0;
 }
 
@@ -794,6 +799,7 @@ int userspace_one_write_inline(struct ib_inf *ib_ctx, uint64_t wr_id,
   if (ret)
     die_printf("%s-%d: ibv_post_send fail %d:%llu\n", __func__, __LINE__, ret,
                (unsigned long long int)wr.wr_id);
+  opctr::RecordOperation(opctr::Operation::kUserspaceOneWriteInline);
   return 0;
 }
 
@@ -825,6 +831,10 @@ int userspace_one_write_sge(struct ib_inf *ib_ctx, uint64_t wr_id,
   MITSUME_STAT_FORCE_ADD(MITSUME_STAT_IB_WRITE, traffic);
   MITSUME_STAT_TRAFFIC_ADD(remote_mr->machine_id, traffic);
 #endif
+  for (int i = 0; i < input_sge_length; i++) {
+    // count each sge separately
+    opctr::RecordOperation(opctr::Operation::kUserspaceOneWriteSge);
+  }
   return 0;
 }
 
@@ -859,6 +869,10 @@ int userspace_one_read_sge(struct ib_inf *ib_ctx, uint64_t wr_id,
   MITSUME_STAT_FORCE_ADD(MITSUME_STAT_IB_READ, traffic);
   MITSUME_STAT_TRAFFIC_ADD(remote_mr->machine_id, traffic);
 #endif
+  for (int i = 0; i < input_sge_length; i++) {
+    // count each sge separately
+    opctr::RecordOperation(opctr::Operation::kUserspaceOneReadSge);
+  }
   return 0;
 }
 
